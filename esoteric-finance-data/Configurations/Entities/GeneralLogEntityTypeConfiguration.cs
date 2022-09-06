@@ -1,6 +1,5 @@
 ﻿using Esoteric.Finance.Abstractions.Constants.Names;
 using Esoteric.Finance.Abstractions.Entities.Dbo;
-using Esoteric.Finance.Data.Configurations.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

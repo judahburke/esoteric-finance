@@ -13,8 +13,11 @@ namespace Esoteric.Finance.Abstractions.Entities.Payment
     {
         [Key]
         public virtual long TransactionMethodId { get; set; }
+        [Required]
         public virtual long TransactionId { get; set; }
+        [Required]
         public virtual int MethodId { get; set; }
+        [Required]
         public virtual decimal Amount { get; set; }
 
         public virtual Transaction Transaction { get; set; }

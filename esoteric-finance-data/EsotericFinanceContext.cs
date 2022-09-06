@@ -11,11 +11,12 @@ namespace Esoteric.Finance.Data
     {
         #region public
         public virtual DbSet<Category> PaymentCategories { get; set; }
-        public virtual DbSet<SubCategory> PaymentSubCategories { get; set; }
+        public virtual DbSet<Detail> PaymentDetails { get; set; }
+        public virtual DbSet<Initiator> PaymentInitiators { get; set; }
         public virtual DbSet<Method> PaymentMethods { get; set; }
-        public virtual DbSet<Recipient> PaymentTargets { get; set; }
+        public virtual DbSet<Recipient> PaymentRecipients { get; set; }
         public virtual DbSet<Transaction> PaymentTransactions { get; set; }
-        public virtual DbSet<TransactionSubCategory> PaymentTransactionSubCategories { get; set; }
+        public virtual DbSet<TransactionDetail> PaymentTransactionDetails { get; set; }
         public virtual DbSet<TransactionMethod> PaymentTransactionMethods { get; set; }
         public virtual DbSet<GeneralLog> GeneralLogs { get; set; }
 
@@ -63,33 +64,38 @@ namespace Esoteric.Finance.Data
                 new Category { CategoryId = 20, Name = "Utilities" },
             });
 
-            modelBuilder.Entity<SubCategory>().HasData(new[]
+            modelBuilder.Entity<Detail>().HasData(new[]
             {
-                new SubCategory { CategoryId = 1,  SubCategoryId = 1, Name = "Correction" },
-                new SubCategory { CategoryId = 2,  SubCategoryId = 2, Name = "Miscellaneous" },
-                new SubCategory { CategoryId = 3,  SubCategoryId = 3, Name = "Tires" },
-                new SubCategory { CategoryId = 4,  SubCategoryId = 4, Name = "Clothes" },
-                new SubCategory { CategoryId = 5,  SubCategoryId = 5, Name = "Insurance" },
-                new SubCategory { CategoryId = 6,  SubCategoryId = 6, Name = "Tithe" },
-                new SubCategory { CategoryId = 7,  SubCategoryId = 7, Name = "Certificate" },
-                new SubCategory { CategoryId = 8,  SubCategoryId = 8, Name = "Game" },
-                new SubCategory { CategoryId = 9,  SubCategoryId = 9, Name = "Dine" },
-                new SubCategory { CategoryId = 9,  SubCategoryId = 10, Name = "Takeout" },
-                new SubCategory { CategoryId = 9,  SubCategoryId = 11, Name = "Drink" },
-                new SubCategory { CategoryId = 9,  SubCategoryId = 12, Name = "Snack" },
-                new SubCategory { CategoryId = 10, SubCategoryId = 13, Name = "Birthday, Mom" },
-                new SubCategory { CategoryId = 11, SubCategoryId = 14, Name = "Medicine" },
-                new SubCategory { CategoryId = 12, SubCategoryId = 15, Name = "Cleaning Supplies" },
-                new SubCategory { CategoryId = 13, SubCategoryId = 16, Name = "Paycheck" },
-                new SubCategory { CategoryId = 14, SubCategoryId = 17, Name = "Taxes" },
-                new SubCategory { CategoryId = 15, SubCategoryId = 18, Name = "Paper" },
-                new SubCategory { CategoryId = 16, SubCategoryId = 19, Name = "Litter" },
-                new SubCategory { CategoryId = 17, SubCategoryId = 20, Name = "Stamps" },
-                new SubCategory { CategoryId = 18, SubCategoryId = 21, Name = "Withdrawal" },
-                new SubCategory { CategoryId = 18, SubCategoryId = 22, Name = "Deposit" },
-                new SubCategory { CategoryId = 18, SubCategoryId = 23, Name = "Pay Credit Card" },
-                new SubCategory { CategoryId = 19, SubCategoryId = 24, Name = "Gas" },
-                new SubCategory { CategoryId = 20, SubCategoryId = 25, Name = "Internet" },
+                new Detail { CategoryId = 1,  DetailId = 1, Description = "Correction" },
+                new Detail { CategoryId = 2,  DetailId = 2, Description = "Miscellaneous" },
+                new Detail { CategoryId = 3,  DetailId = 3, Description = "Tires" },
+                new Detail { CategoryId = 4,  DetailId = 4, Description = "Clothes" },
+                new Detail { CategoryId = 5,  DetailId = 5, Description = "Insurance" },
+                new Detail { CategoryId = 6,  DetailId = 6, Description = "Tithe" },
+                new Detail { CategoryId = 7,  DetailId = 7, Description = "Certificate" },
+                new Detail { CategoryId = 8,  DetailId = 8, Description = "Game" },
+                new Detail { CategoryId = 9,  DetailId = 9, Description = "Dine" },
+                new Detail { CategoryId = 9,  DetailId = 10, Description = "Takeout" },
+                new Detail { CategoryId = 9,  DetailId = 11, Description = "Drink" },
+                new Detail { CategoryId = 9,  DetailId = 12, Description = "Snack" },
+                new Detail { CategoryId = 10, DetailId = 13, Description = "Birthday, Mom" },
+                new Detail { CategoryId = 11, DetailId = 14, Description = "Medicine" },
+                new Detail { CategoryId = 12, DetailId = 15, Description = "Cleaning Supplies" },
+                new Detail { CategoryId = 13, DetailId = 16, Description = "Paycheck" },
+                new Detail { CategoryId = 14, DetailId = 17, Description = "Taxes" },
+                new Detail { CategoryId = 15, DetailId = 18, Description = "Paper" },
+                new Detail { CategoryId = 16, DetailId = 19, Description = "Litter" },
+                new Detail { CategoryId = 17, DetailId = 20, Description = "Stamps" },
+                new Detail { CategoryId = 18, DetailId = 21, Description = "Withdrawal" },
+                new Detail { CategoryId = 18, DetailId = 22, Description = "Deposit" },
+                new Detail { CategoryId = 18, DetailId = 23, Description = "Pay Credit Card" },
+                new Detail { CategoryId = 19, DetailId = 24, Description = "Gas" },
+                new Detail { CategoryId = 20, DetailId = 25, Description = "Internet" },
+            });
+
+            modelBuilder.Entity<Initiator>().HasData(new[]
+            {
+                new Initiator { InitiatorId = 1, Name = "Account Owner" },
             });
 
             modelBuilder.Entity<Method>().HasData(new[]

@@ -214,6 +214,252 @@ namespace Esoteric.Finance.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Detail", b =>
+                {
+                    b.Property<long>("DetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("esoteric-finance-api");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("current_timestamp");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DetailId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Detail", "Payment");
+
+                    b.HasData(
+                        new
+                        {
+                            DetailId = 1L,
+                            CategoryId = 1,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Correction"
+                        },
+                        new
+                        {
+                            DetailId = 2L,
+                            CategoryId = 2,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Miscellaneous"
+                        },
+                        new
+                        {
+                            DetailId = 3L,
+                            CategoryId = 3,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Tires"
+                        },
+                        new
+                        {
+                            DetailId = 4L,
+                            CategoryId = 4,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Clothes"
+                        },
+                        new
+                        {
+                            DetailId = 5L,
+                            CategoryId = 5,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Insurance"
+                        },
+                        new
+                        {
+                            DetailId = 6L,
+                            CategoryId = 6,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Tithe"
+                        },
+                        new
+                        {
+                            DetailId = 7L,
+                            CategoryId = 7,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Certificate"
+                        },
+                        new
+                        {
+                            DetailId = 8L,
+                            CategoryId = 8,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Game"
+                        },
+                        new
+                        {
+                            DetailId = 9L,
+                            CategoryId = 9,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Dine"
+                        },
+                        new
+                        {
+                            DetailId = 10L,
+                            CategoryId = 9,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Takeout"
+                        },
+                        new
+                        {
+                            DetailId = 11L,
+                            CategoryId = 9,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Drink"
+                        },
+                        new
+                        {
+                            DetailId = 12L,
+                            CategoryId = 9,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Snack"
+                        },
+                        new
+                        {
+                            DetailId = 13L,
+                            CategoryId = 10,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Birthday, Mom"
+                        },
+                        new
+                        {
+                            DetailId = 14L,
+                            CategoryId = 11,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Medicine"
+                        },
+                        new
+                        {
+                            DetailId = 15L,
+                            CategoryId = 12,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Cleaning Supplies"
+                        },
+                        new
+                        {
+                            DetailId = 16L,
+                            CategoryId = 13,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Paycheck"
+                        },
+                        new
+                        {
+                            DetailId = 17L,
+                            CategoryId = 14,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Taxes"
+                        },
+                        new
+                        {
+                            DetailId = 18L,
+                            CategoryId = 15,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Paper"
+                        },
+                        new
+                        {
+                            DetailId = 19L,
+                            CategoryId = 16,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Litter"
+                        },
+                        new
+                        {
+                            DetailId = 20L,
+                            CategoryId = 17,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Stamps"
+                        },
+                        new
+                        {
+                            DetailId = 21L,
+                            CategoryId = 18,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Withdrawal"
+                        },
+                        new
+                        {
+                            DetailId = 22L,
+                            CategoryId = 18,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Deposit"
+                        },
+                        new
+                        {
+                            DetailId = 23L,
+                            CategoryId = 18,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Pay Credit Card"
+                        },
+                        new
+                        {
+                            DetailId = 24L,
+                            CategoryId = 19,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Gas"
+                        },
+                        new
+                        {
+                            DetailId = 25L,
+                            CategoryId = 20,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Internet"
+                        });
+                });
+
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Initiator", b =>
+                {
+                    b.Property<int>("InitiatorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("esoteric-finance-api");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("current_timestamp");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("InitiatorId");
+
+                    b.ToTable("Initiator", "Payment");
+
+                    b.HasData(
+                        new
+                        {
+                            InitiatorId = 1,
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Name = "Account Owner"
+                        });
+                });
+
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Method", b =>
                 {
                     b.Property<int>("MethodId")
@@ -304,222 +550,15 @@ namespace Esoteric.Finance.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.SubCategory", b =>
-                {
-                    b.Property<int>("SubCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("esoteric-finance-api");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("current_timestamp");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("SubCategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategory", "Payment");
-
-                    b.HasData(
-                        new
-                        {
-                            SubCategoryId = 1,
-                            CategoryId = 1,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Correction"
-                        },
-                        new
-                        {
-                            SubCategoryId = 2,
-                            CategoryId = 2,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Miscellaneous"
-                        },
-                        new
-                        {
-                            SubCategoryId = 3,
-                            CategoryId = 3,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Tires"
-                        },
-                        new
-                        {
-                            SubCategoryId = 4,
-                            CategoryId = 4,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Clothes"
-                        },
-                        new
-                        {
-                            SubCategoryId = 5,
-                            CategoryId = 5,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Insurance"
-                        },
-                        new
-                        {
-                            SubCategoryId = 6,
-                            CategoryId = 6,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Tithe"
-                        },
-                        new
-                        {
-                            SubCategoryId = 7,
-                            CategoryId = 7,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Certificate"
-                        },
-                        new
-                        {
-                            SubCategoryId = 8,
-                            CategoryId = 8,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Game"
-                        },
-                        new
-                        {
-                            SubCategoryId = 9,
-                            CategoryId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Dine"
-                        },
-                        new
-                        {
-                            SubCategoryId = 10,
-                            CategoryId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Takeout"
-                        },
-                        new
-                        {
-                            SubCategoryId = 11,
-                            CategoryId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Drink"
-                        },
-                        new
-                        {
-                            SubCategoryId = 12,
-                            CategoryId = 9,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Snack"
-                        },
-                        new
-                        {
-                            SubCategoryId = 13,
-                            CategoryId = 10,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Birthday, Mom"
-                        },
-                        new
-                        {
-                            SubCategoryId = 14,
-                            CategoryId = 11,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Medicine"
-                        },
-                        new
-                        {
-                            SubCategoryId = 15,
-                            CategoryId = 12,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Cleaning Supplies"
-                        },
-                        new
-                        {
-                            SubCategoryId = 16,
-                            CategoryId = 13,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Paycheck"
-                        },
-                        new
-                        {
-                            SubCategoryId = 17,
-                            CategoryId = 14,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Taxes"
-                        },
-                        new
-                        {
-                            SubCategoryId = 18,
-                            CategoryId = 15,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Paper"
-                        },
-                        new
-                        {
-                            SubCategoryId = 19,
-                            CategoryId = 16,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Litter"
-                        },
-                        new
-                        {
-                            SubCategoryId = 20,
-                            CategoryId = 17,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Stamps"
-                        },
-                        new
-                        {
-                            SubCategoryId = 21,
-                            CategoryId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Withdrawal"
-                        },
-                        new
-                        {
-                            SubCategoryId = 22,
-                            CategoryId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Deposit"
-                        },
-                        new
-                        {
-                            SubCategoryId = 23,
-                            CategoryId = 18,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Pay Credit Card"
-                        },
-                        new
-                        {
-                            SubCategoryId = 24,
-                            CategoryId = 19,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Gas"
-                        },
-                        new
-                        {
-                            SubCategoryId = 25,
-                            CategoryId = 20,
-                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Name = "Internet"
-                        });
-                });
-
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", b =>
                 {
                     b.Property<long>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -531,6 +570,9 @@ namespace Esoteric.Finance.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("current_timestamp");
+
+                    b.Property<int>("InitiatorId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("PostedDate")
                         .HasColumnType("TEXT");
@@ -543,9 +585,47 @@ namespace Esoteric.Finance.Data.Migrations
 
                     b.HasKey("TransactionId");
 
+                    b.HasIndex("InitiatorId");
+
                     b.HasIndex("RecipientId");
 
                     b.ToTable("Transaction", "Payment");
+                });
+
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionDetail", b =>
+                {
+                    b.Property<long>("TransactionDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("esoteric-finance-api");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("current_timestamp");
+
+                    b.Property<long>("DetailId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Multiplier")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TransactionDetailId");
+
+                    b.HasIndex("DetailId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("TransactionDetail", "Payment");
                 });
 
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionMethod", b =>
@@ -554,8 +634,8 @@ namespace Esoteric.Finance.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("REAL");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -584,46 +664,10 @@ namespace Esoteric.Finance.Data.Migrations
                     b.ToTable("TransactionMethod", "Payment");
                 });
 
-            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionSubCategory", b =>
-                {
-                    b.Property<long>("TransactionSubCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT")
-                        .HasDefaultValue("esoteric-finance-api");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("current_timestamp");
-
-                    b.Property<double>("Multiplier")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("SubCategoryId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("TransactionId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("TransactionSubCategoryId");
-
-                    b.HasIndex("SubCategoryId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("TransactionSubCategory", "Payment");
-                });
-
-            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.SubCategory", b =>
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Detail", b =>
                 {
                     b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Category", "Category")
-                        .WithMany("SubCategories")
+                        .WithMany("Details")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -633,25 +677,52 @@ namespace Esoteric.Finance.Data.Migrations
 
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", b =>
                 {
+                    b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Initiator", "Initiator")
+                        .WithMany("Transactions")
+                        .HasForeignKey("InitiatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Recipient", "Recipient")
                         .WithMany("Transactions")
                         .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Initiator");
+
                     b.Navigation("Recipient");
+                });
+
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionDetail", b =>
+                {
+                    b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Detail", "Detail")
+                        .WithMany("TransactionDetails")
+                        .HasForeignKey("DetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", "Transaction")
+                        .WithMany("TransactionDetails")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Detail");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionMethod", b =>
                 {
                     b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Method", "Method")
-                        .WithMany("Transactions")
+                        .WithMany("TransactionMethods")
                         .HasForeignKey("MethodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", "Transaction")
-                        .WithMany("Methods")
+                        .WithMany("TransactionMethods")
                         .HasForeignKey("TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -661,33 +732,24 @@ namespace Esoteric.Finance.Data.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.TransactionSubCategory", b =>
-                {
-                    b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.SubCategory", "SubCategory")
-                        .WithMany("Transactions")
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", "Transaction")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubCategory");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Category", b =>
                 {
-                    b.Navigation("SubCategories");
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Detail", b =>
+                {
+                    b.Navigation("TransactionDetails");
+                });
+
+            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Initiator", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Method", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("TransactionMethods");
                 });
 
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Recipient", b =>
@@ -695,16 +757,11 @@ namespace Esoteric.Finance.Data.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.SubCategory", b =>
-                {
-                    b.Navigation("Transactions");
-                });
-
             modelBuilder.Entity("Esoteric.Finance.Abstractions.Entities.Payment.Transaction", b =>
                 {
-                    b.Navigation("Methods");
+                    b.Navigation("TransactionDetails");
 
-                    b.Navigation("SubCategories");
+                    b.Navigation("TransactionMethods");
                 });
 #pragma warning restore 612, 618
         }

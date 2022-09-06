@@ -1,13 +1,11 @@
-﻿using Esoteric.Finance.Abstractions.DataTransfer.Recipients;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Esoteric.Finance.Abstractions.DataTransfer.Details;
+using Esoteric.Finance.Abstractions.DataTransfer.Methods;
 
 namespace Esoteric.Finance.Abstractions.DataTransfer.Transactions
 {
     public class TransactionRequest
-        : TransactionModel<TransactionRecipientRequest, TransactionMethodRequest, TransactionCategoryRequest>
+        : TransactionModel<CommonNamedEntityRequest, CommonNamedEntityRequest, TransactionMethodRequest, TransactionDetailRequest>
     {
-        public long? TransactionId { get; set; }
+        public long? Id { get; set; }
     }
 }

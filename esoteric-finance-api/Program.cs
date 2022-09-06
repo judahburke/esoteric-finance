@@ -2,6 +2,7 @@ using Esoteric.Finance.Abstractions.Settings;
 using Esoteric.Finance.Api.Handlers;
 using Esoteric.Finance.Data;
 using Esoteric.Finance.Services;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

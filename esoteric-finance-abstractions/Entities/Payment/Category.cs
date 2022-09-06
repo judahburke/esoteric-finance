@@ -2,19 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Esoteric.Finance.Abstractions.Entities.Payment
 {
     /// <summary>
-    /// lookup entity for payment category (genre)
-    /// one-to-many with <see cref="SubCategory"/>
+    /// lookup entity for payment category
     /// </summary>
     public class Category : CommonNamedEntity
     {
         [Key]
         public virtual int CategoryId { get; set; }
 
-        public virtual ICollection<SubCategory> SubCategories { get; set; }
+        [NotMapped]
+        public override int Id => CategoryId;
+        public virtual ICollection<Detail> Details { get; set; }
     }
 }

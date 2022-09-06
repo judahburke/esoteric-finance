@@ -6,7 +6,7 @@ namespace Esoteric.Finance.Abstractions.DataTransfer.Transactions
 {
     public class TransactionLookupRequest
     {
-        public long? TransactionId { get; set; }
+        public long? Id { get; set; }
         public DateTimeOffset? MinimumDate { get; set; }
         public DateTimeOffset? MaximumDate { get; set; }
     }

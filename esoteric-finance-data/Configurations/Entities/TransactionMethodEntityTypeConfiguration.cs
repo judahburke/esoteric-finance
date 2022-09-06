@@ -1,6 +1,5 @@
 ﻿using Esoteric.Finance.Abstractions.Constants.Names;
 using Esoteric.Finance.Abstractions.Entities.Payment;
-using Esoteric.Finance.Data.Configurations.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -17,9 +16,9 @@ namespace Esoteric.Finance.Data.Configurations.Entities
         public override void Configure(EntityTypeBuilder<TransactionMethod> builder)
         {
             builder
-                .Property(b => b.Amount)
-                .IsRequired()
-                .HasConversion<double>();
+                .Property(p => p.Amount)
+                .HasConversion<decimal>()
+                .IsRequired();
 
             builder
                 .ToTable(Tables.TransactionMethod, Schemas.Payment);

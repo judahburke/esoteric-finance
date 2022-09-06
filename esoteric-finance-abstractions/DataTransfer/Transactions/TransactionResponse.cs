@@ -1,10 +1,11 @@
-﻿using Esoteric.Finance.Abstractions.DataTransfer.Recipients;
+﻿using Esoteric.Finance.Abstractions.DataTransfer.Details;
+using Esoteric.Finance.Abstractions.DataTransfer.Methods;
 
 namespace Esoteric.Finance.Abstractions.DataTransfer.Transactions
 {
     public class TransactionResponse
-        : TransactionModel<TransactionRecipientResponse, TransactionMethodResponse, TransactionCategoryResponse>
+        : TransactionModel<CommonNamedEntityResponse, CommonNamedEntityResponse, TransactionMethodResponse, TransactionDetailResponse>
     {
-        public long TransactionId { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Esoteric.Finance.Abstractions.Entities.Payment
@@ -14,6 +15,8 @@ namespace Esoteric.Finance.Abstractions.Entities.Payment
         [Key]
         public virtual int MethodId { get; set; }
 
-        public virtual ICollection<TransactionMethod> Transactions { get; set; }
+        [NotMapped]
+        public override int Id => MethodId;
+        public virtual ICollection<TransactionMethod> TransactionMethods { get; set; }
     }
 }

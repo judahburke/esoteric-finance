@@ -5,7 +5,7 @@
 
 <script lang="ts">
     import { defineComponent } from 'vue';
-    import TransactionSelector from '@/components/transaction/TransactionSelector.vue';
+    import TransactionSelector from '@/components/TransactionSelector.vue';
     import 'vue-select/dist/vue-select.css';
 
     export default defineComponent({

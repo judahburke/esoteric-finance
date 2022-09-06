@@ -1,14 +1,15 @@
 import type { ComponentCustomProperties } from 'vue'
 import { Store } from 'vuex'
-import type { NamedType, NamedAmountType, NamedMultiplierType } from '@/types/global-types';
+import type { NamedType, DetailType, MethodType } from '@/types/global-types';
 
 export interface State {
     selectedTransactionId: number,
-    selectedCategory: null | NamedType,
-    selectedSubCategories: NamedMultiplierType[],
     selectedTransactionDate: Date,
     selectedPostedDate: null | Date,
-    selectedMethods: NamedAmountType[],
+    selectedAmount: number,
+    selectedDetails: DetailType[],
+    selectedInitiator: null | NamedType,
+    selectedMethods: MethodType[],
     selectedRecipient: null | NamedType,
 }
 

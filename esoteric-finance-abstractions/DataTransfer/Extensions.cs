@@ -1,149 +1,95 @@
 ﻿using Esoteric.Finance.Abstractions;
+using Esoteric.Finance.Abstractions.Common;
 using Esoteric.Finance.Abstractions.DataTransfer;
 using Esoteric.Finance.Abstractions.DataTransfer.Categories;
+using Esoteric.Finance.Abstractions.DataTransfer.Details;
 using Esoteric.Finance.Abstractions.DataTransfer.Methods;
-using Esoteric.Finance.Abstractions.DataTransfer.Recipients;
 using Esoteric.Finance.Abstractions.DataTransfer.Transactions;
 using Esoteric.Finance.Abstractions.Entities.Payment;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Esoteric.Finance.Abstractions.DataTransfer
 {
     public static class Extensions
     {
-        public static CrudResponse<TKey> ToCreateResponse<TKey>(this TKey id) 
-            => new CrudResponse<TKey> { Id = id, CrudStatus = Constants.CrudStatus.CREATED };
-        public static CrudResponse<TKey> ToUpdateResponse<TKey>(this TKey id)
-            => new CrudResponse<TKey> { Id = id, CrudStatus = Constants.CrudStatus.UPDATED };
-        public static TransactionResponse ToTransactionResponse(this Transaction transaction)
+        public static CrudResponse<int> ToCrudResponse(this Category entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<int> { Id = entity.CategoryId, CrudStatus = crudStatus };
+        public static CrudResponse<long> ToCrudResponse(this Detail entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<long> { Id = entity.DetailId, CrudStatus = crudStatus };
+        public static CrudResponse<int> ToCrudResponse(this Initiator entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<int> { Id = entity.InitiatorId, CrudStatus = crudStatus };
+        public static CrudResponse<int> ToCrudResponse(this Method entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<int> { Id = entity.MethodId, CrudStatus = crudStatus };
+        public static CrudResponse<int> ToCrudResponse(this Recipient entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<int> { Id = entity.RecipientId, CrudStatus = crudStatus };
+        public static CrudResponse<long> ToCrudResponse(this Transaction entity, Constants.CrudStatus crudStatus)
+            => new CrudResponse<long> { Id = entity.TransactionId, CrudStatus = crudStatus };
+        public static TransactionResponse ToResponse(this Transaction transaction)
         {
             TransactionResponse response = new TransactionResponse
             {
-                TransactionId = transaction.TransactionId,
-                PostedDate = transaction.PostedDate,
+                Id = transaction.TransactionId,
                 TransactionDate = transaction.TransactionDate,
+                PostedDate = transaction.PostedDate,
             };
+
+            if (transaction.Initiator != null)
+            {
+                response.Initiator = transaction.Initiator.ToCommonResponse();
+            }
 
             if (transaction.Recipient != null)
             {
-                response.Recipient = transaction.Recipient.ToTransactionRecipientResponse();
+                response.Recipient = transaction.Recipient.ToCommonResponse();
             }
 
-            if (transaction.Methods != null)
+            if (transaction.TransactionMethods.NullSafeAny())
             {
-                response.Methods = transaction.Methods.Select(ToTransactionMethodResponse);
+                response.Methods = transaction.TransactionMethods.Select(e => e.ToResponse());
             }
 
-            if (transaction.SubCategories != null)
+            if (transaction.TransactionDetails.NullSafeAny())
             {
-                response.Categories = transaction.SubCategories.Select(ToTransactionCategoryResponse);
+                response.Details = transaction.TransactionDetails.Select(e => e.ToResponse());
             }
 
             return response;
         }
-        public static TransactionRecipientResponse ToTransactionRecipientResponse(this Recipient recipient, bool includeTransactionIds = false)
+        public static TransactionDetailResponse ToResponse(this TransactionDetail detail)
         {
-            var response = new TransactionRecipientResponse
+            var response = new TransactionDetailResponse
             {
-                RecipientId = recipient.RecipientId,
-                Recipient = recipient.Name,
+                Id = detail.DetailId,
+                Description = detail.Detail.Description,
+                Category = detail.Detail.Category.ToResponse(),
+                Multiplier = detail.Multiplier,
+                TransactionId = detail.TransactionId
             };
 
-            if (recipient.Transactions.NullSafeAny() && includeTransactionIds)
-            {
-                response.TransactionIds = recipient.Transactions.Select(x => x.TransactionId).ToList();
-            }
-
             return response;
         }
-        public static TransactionMethodResponse ToTransactionMethodResponse(this TransactionMethod transactionMethod)
+        public static DetailResponse ToResponse(this Detail detail, bool includeCategory = false, bool includeTransaction = false)
         {
-            var response = new TransactionMethodResponse
+            var response = new DetailResponse
             {
-                Amount = transactionMethod.Amount,
-                MethodId = transactionMethod.MethodId,
-                TransactionId = transactionMethod.TransactionId,
+                Id = detail.DetailId,
+                Description = detail.Description,
             };
 
-            if (transactionMethod.Method != null)
+            if (detail.Category != null && includeCategory)
             {
-                response.Method = transactionMethod.Method.Name;
-                response.MethodId = transactionMethod.Method.MethodId;
+                response.Category = detail.Category.ToResponse();
             }
 
-            if (transactionMethod.Transaction != null)
+            if (detail.TransactionDetails.NullSafeAny() && includeTransaction)
             {
-                response.TransactionId = transactionMethod.Transaction.TransactionId;
-            }
-
-            return response;
-        }
-        public static TransactionCategoryResponse ToTransactionCategoryResponse(this TransactionSubCategory transactionSubCategory)
-        {
-            var response = new TransactionCategoryResponse
-            {
-                Multiplier = transactionSubCategory.Multiplier,
-                SubCategoryId = transactionSubCategory.SubCategoryId,
-                TransactionId = transactionSubCategory.TransactionId,
-            };
-
-            if (transactionSubCategory.SubCategory != null)
-            {
-                response.SubCategory = transactionSubCategory.SubCategory.Name;
-                response.SubCategoryId = transactionSubCategory.SubCategory.SubCategoryId;
-                response.CategoryId = transactionSubCategory.SubCategory.CategoryId;
-                if (transactionSubCategory.SubCategory.Category != null)
-                {
-                    response.Category = transactionSubCategory.SubCategory.Category.Name;
-                    response.CategoryId = transactionSubCategory.SubCategory.Category.CategoryId;
-                }
-            }
-
-            if (transactionSubCategory.Transaction != null)
-            {
-                response.TransactionId = transactionSubCategory.Transaction.TransactionId;
+                response.Transactions = detail.TransactionDetails.Select(ToResponse);
             }
 
             return response;
         }
-        public static RecipientResponse ToRecipientResponse(this Recipient recipient, bool includeFullTransaction = false)
-        {
-            var response = new RecipientResponse
-            {
-                Id = recipient.RecipientId,
-                Name = recipient.Name,
-            };
-
-            if (recipient.Transactions.NullSafeAny() && includeFullTransaction)
-            {
-                response.Transactions = recipient.Transactions.Select(ToTransactionResponse);
-            }
-
-            return response;
-        }
-        public static MethodResponse ToMethodResponse(this Method method, bool includeFullTransaction = false)
-        {
-            var response = new MethodResponse
-            {
-                Id = method.MethodId,
-                Name = method.Name,
-            };
-
-            if (method.Transactions.NullSafeAny())
-            {
-                if (includeFullTransaction)
-                {
-                    response.Transactions = method.Transactions.Select(t => t.Transaction.ToTransactionResponse());
-                }
-                else
-                {
-                    response.TransactionMethods = method.Transactions.Select(ToTransactionMethodResponse);
-                }
-            }
-
-            return response;
-        }
-        public static CategoryResponse ToCategoryResponse(this Category category, bool includeSubCategories = false)
+        public static CategoryResponse ToResponse(this Category category, bool includeDetails = false)
         {
             var response = new CategoryResponse
             {
@@ -151,36 +97,96 @@ namespace Esoteric.Finance.Abstractions.DataTransfer
                 Name = category.Name,
             };
 
-            if (category.SubCategories.NullSafeAny() && includeSubCategories)
+            if (category.Details.NullSafeAny() && includeDetails)
             {
-                response.SubCategories = category.SubCategories.Select(sc => sc.ToSubCategoryResponse(includeCategory: false)).ToList();
+                response.Details = category.Details.Select(e => e.ToResponse());
             }
 
             return response;
         }
-        public static SubCategoryResponse ToSubCategoryResponse(this SubCategory subCategory, bool includeCategory = false, bool includeFullTransaction = true)
+        public static CommonNamedEntityResponse ToCommonResponse(this Category category, bool includeTransaction = false)
         {
-            var response = new SubCategoryResponse
+            var response = new CommonNamedEntityResponse
             {
-                Id = subCategory.SubCategoryId,
-                Name = subCategory.Name,
+                Id = category.CategoryId,
+                Name = category.Name,
             };
 
-            if (subCategory.Transactions.NullSafeAny())
+            if (includeTransaction && category.Details.NullSafeAny())
             {
-                if (includeFullTransaction)
-                {
-                    response.Transactions = subCategory.Transactions.Select(t => t.Transaction.ToTransactionResponse());
-                }
-                else
-                {
-                    response.TransactionCategories = subCategory.Transactions.Select(ToTransactionCategoryResponse);
-                }
+                response.Transactions = category.Details.Where(d => d.TransactionDetails.NullSafeAny()).SelectMany(e => e.TransactionDetails.Select(x => x.Transaction.ToResponse()));
             }
 
-            if (subCategory.Category != null && includeCategory)
+            return response;
+        }
+        public static CommonNamedEntityResponse ToCommonResponse(this Initiator initiator, bool includeTransaction = false)
+        {
+            var response = new CommonNamedEntityResponse
             {
-                response.Category = subCategory.Category.ToCategoryResponse(includeSubCategories: false);
+                Id = initiator.InitiatorId,
+                Name = initiator.Name,
+            };
+
+            if (includeTransaction && initiator.Transactions.NullSafeAny())
+            {
+                response.Transactions = initiator.Transactions.Select(ToResponse);
+            }
+
+            return response;
+        }
+        public static TransactionMethodResponse ToResponse(this TransactionMethod method)
+        {
+            var response = new TransactionMethodResponse
+            {
+                Id = method.MethodId,
+                Name = method.Method.Name,
+                Amount = method.Amount,
+                TransactionId = method.TransactionId
+            };
+
+            return response;
+        }
+        public static MethodResponse ToResponse(this Method method)
+        {
+            var response = new MethodResponse
+            {
+                Id = method.Id,
+                Name = method.Name,
+            };
+
+            if (method.TransactionMethods.NullSafeAny())
+            {
+                response.Transactions = method.TransactionMethods.Select(ToResponse);
+            }
+
+            return response;
+        }
+        public static CommonNamedEntityResponse ToCommonResponse(this Method method, bool includeTransaction = false)
+        {
+            var response = new CommonNamedEntityResponse
+            {
+                Id = method.Id,
+                Name = method.Name,
+            };
+
+            if (includeTransaction && method.TransactionMethods.NullSafeAny())
+            {
+                response.Transactions = method.TransactionMethods.Select(x => x.Transaction.ToResponse());
+            }
+
+            return response;
+        }
+        public static CommonNamedEntityResponse ToCommonResponse(this Recipient recipient, bool includeTransaction = false)
+        {
+            var response = new CommonNamedEntityResponse
+            {
+                Id = recipient.RecipientId,
+                Name = recipient.Name,
+            };
+
+            if (includeTransaction && recipient.Transactions.NullSafeAny())
+            {
+                response.Transactions = recipient.Transactions.Select(ToResponse);
             }
 
             return response;

@@ -1,4 +1,4 @@
-﻿using Esoteric.Finance.Data.Repositories;
+﻿using Esoteric.Finance.Abstractions;
 using Esoteric.Finance.Data.Repositories.Dbo;
 using Esoteric.Finance.Data.Tools;
 using Microsoft.EntityFrameworkCore.DataEncryption;

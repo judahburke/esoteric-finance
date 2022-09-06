@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Esoteric.Finance.Abstractions.DataTransfer.Details;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Esoteric.Finance.Abstractions.DataTransfer.Categories
 {
-    public class CategoryResponse : CategoryModel
+    public class CategoryResponse : CommonNamedEntityModel
     {
-        public int? Id { get; set; }
-        public IList<SubCategoryResponse> SubCategories { get; set; }
+        public virtual int Id { get; set; }
+        public virtual IEnumerable<DetailResponse> Details { get; set; }
     }
 }

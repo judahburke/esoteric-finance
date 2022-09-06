@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace System.Linq
+namespace Esoteric.Finance.Abstractions
 {
     public static class EsotericLinqExtensions
     {

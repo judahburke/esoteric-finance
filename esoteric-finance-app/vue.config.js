@@ -27,15 +27,22 @@ module.exports = {
             '^/transaction': {
                 target: 'https://localhost:5001/'
             },
+            '^/initiator': {
+                target: 'https://localhost:5001/'
+            },
             '^/recipient': {
+                target: 'https://localhost:5001/'
+            },
+            '^/method': {
                 target: 'https://localhost:5001/'
             },
             '^/category': {
                 target: 'https://localhost:5001/'
             },
-            '^/method': {
+            '^/detail': {
                 target: 'https://localhost:5001/'
-            }
+            },
+
         },
         port: 5002
     }

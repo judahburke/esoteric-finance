@@ -1,8 +1,8 @@
-﻿using Esoteric.Finance.Abstractions.Constants;
+﻿using Esoteric.Finance.Abstractions;
 using Esoteric.Finance.Abstractions.DataTransfer;
 using Esoteric.Finance.Abstractions.DataTransfer.Transactions;
+using Esoteric.Finance.Abstractions.Entities.Payment;
 using Esoteric.Finance.Abstractions.Exceptions;
-using Esoteric.Finance.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -26,17 +26,13 @@ namespace Esoteric.Finance.Api.Controllers
         [HttpPut(Name = "PutTransaction")]
         public async Task<ObjectResult> Put(TransactionRequest request, CancellationToken cancellationToken)
         {
-            if (request.TransactionId > 0)
+            if (request.Id > 0)
             {
-                var updatedTransaction = await _dataRepository.UpdateTransaction(request, cancellationToken);
-
-                return ObjectOk(updatedTransaction.TransactionId.ToUpdateResponse());
+                return ObjectOk(await _dataRepository.UpdateTransaction(request, cancellationToken));
             }
             else
             {
-                var createdTransaction = await _dataRepository.CreateTransaction(request, cancellationToken);
-
-                return ObjectOk(createdTransaction.TransactionId.ToCreateResponse());
+                return ObjectOk(await _dataRepository.CreateTransaction(request, cancellationToken));
             }
         }
 
@@ -45,30 +41,33 @@ namespace Esoteric.Finance.Api.Controllers
         {
             var transactions = _dataRepository.GetTransactions(e => true, cancellationToken).GetAwaiter().GetResult();
 
-            return transactions.Select(x => x.ToTransactionResponse()).OrderByDescending(x => x.TransactionDate).ToArray();
+            return transactions.Select(x => x.ToResponse()).OrderByDescending(x => x.TransactionDate).ToArray();
         }
 
         [HttpPost("filter", Name = "FilterTransactions")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TransactionResponse>))]
-        public async Task<ObjectResult> Filter(TransactionLookupRequest request, CancellationToken cancellationToken)
+        public async Task<ObjectResult> PostFilter(TransactionLookupRequest request, CancellationToken cancellationToken)
         {
             var transactions = await _dataRepository.GetTransactions(e => request == null || (
-                (request.TransactionId == null || e.TransactionId == request.TransactionId.Value) &&
+                (request.Id == null || e.TransactionId == request.Id.Value) &&
                 (request.MinimumDate == null || e.TransactionDate >= request.MinimumDate.Value) &&
                 (request.MaximumDate == null || e.TransactionDate <= request.MaximumDate.Value)), cancellationToken);
 
-            return ObjectOk(transactions.Select(x => x.ToTransactionResponse()));
+            return ObjectOk(transactions.Select(x => x.ToResponse()));
         }
 
         [HttpDelete(Name = "DeleteTransaction")]
-        public async Task<ObjectResult> DeleteTransaction(TransactionLookupRequest request, CancellationToken cancellationToken)
+        public async Task<ObjectResult> Delete(TransactionLookupRequest request, CancellationToken cancellationToken)
         {
-            if (request.TransactionId == null)
+            _logger.BeginScope(request);
+            _logger.LogInformation("attempting to delete {type}", nameof(Transaction));
+
+            if (request.Id == null || request.Id < 1)
             {
-                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, new { reason = "id is null" });
+                throw new HttpStatusCodeException(HttpStatusCode.BadRequest, new { reason = "id is " + request.Id });
             }
 
-            var response = await _dataRepository.DeleteTransaction(request.TransactionId.Value, cancellationToken);
+            var response = await _dataRepository.DeleteTransaction(request.Id.Value, cancellationToken);
 
             return ObjectOk(response);
         }

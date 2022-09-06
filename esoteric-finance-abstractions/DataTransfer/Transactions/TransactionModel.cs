@@ -1,19 +1,25 @@
-﻿using Esoteric.Finance.Abstractions.DataTransfer.Recipients;
+﻿using Esoteric.Finance.Abstractions.DataTransfer.Details;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Esoteric.Finance.Abstractions.DataTransfer.Transactions
 {
-    public class TransactionModel<TRecipient, TMethod, TCategory>
-        where TRecipient: TransactionRecipientModel
-        where TMethod : TransactionMethodModel
-        where TCategory : TransactionCategoryModel
+    public abstract class TransactionModel
     {
         public DateTimeOffset TransactionDate { get; set; }
         public DateTimeOffset? PostedDate { get; set; }
+    }
+
+    public class TransactionModel<TInitiator, TRecipient, TMethod, TDetail> : TransactionModel
+        where TInitiator : CommonNamedEntityModel
+        where TRecipient: CommonNamedEntityModel
+        where TMethod : CommonNamedEntityModel
+        where TDetail : DetailModel
+    {
+        public TInitiator Initiator { get; set; }
         public TRecipient Recipient { get; set; }
         public IEnumerable<TMethod> Methods { get; set; }
-        public IEnumerable<TCategory> Categories { get; set; }
+        public IEnumerable<TDetail> Details { get; set; }
     }
 }

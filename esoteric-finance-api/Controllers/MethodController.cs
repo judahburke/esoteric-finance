@@ -1,7 +1,7 @@
-﻿using Esoteric.Finance.Abstractions.DataTransfer;
-using Esoteric.Finance.Abstractions.DataTransfer.Methods;
+﻿using Esoteric.Finance.Abstractions;
+using Esoteric.Finance.Abstractions.Constants;
+using Esoteric.Finance.Abstractions.DataTransfer;
 using Esoteric.Finance.Abstractions.Entities.Payment;
-using Esoteric.Finance.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Esoteric.Finance.Api.Controllers
@@ -21,28 +21,31 @@ namespace Esoteric.Finance.Api.Controllers
             _dataRepository = dataRepository;
         }
 
-        [HttpPut(Name = "create method")]
+        [HttpPut(Name = "create / find method")]
         [ProducesResponseType(200, Type = typeof(CrudResponse<int>))]
-        public async Task<ObjectResult> CreateMethod(CommonNamedEntityRequest request, CancellationToken cancellationToken)
+        public async Task<ObjectResult> Put(CommonNamedEntityRequest request, CancellationToken cancellationToken)
         {
             var method = await _dataRepository.FindByIdOrNameOrAddAsync<Method>(request.Id, request.Name, StringComparison.Ordinal, true, cancellationToken);
 
-            return ObjectOk(method.MethodId.ToCreateResponse());
+            return ObjectOk(method.ToCrudResponse(request.Id > 0 ? CrudStatus.READ : CrudStatus.CREATED));
         }
 
         [HttpGet(Name = "read method")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<MethodResponse>))]
-        public async Task<ObjectResult> GetMethods(CancellationToken cancellationToken)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<CommonNamedEntityResponse>))]
+        public async Task<ObjectResult> Get(CancellationToken cancellationToken)
         {
-            var methods = await _dataRepository.GetNamedEntities<Method>(null, cancellationToken);
+            var methods = await _dataRepository.GetAuditedEntities<Method>(x => x, cancellationToken);
 
-            return ObjectOk(methods.Select(m => m.ToMethodResponse()));
+            return ObjectOk(methods.Select(m => m.ToResponse()));
         }
 
-        [HttpDelete(Name = "destroy method")]
+        [HttpDelete(Name = "destroy / update method")]
         [ProducesResponseType(200, Type = typeof(CrudResponse))]
-        public async Task<ObjectResult> DeleteMethod(CommonNamedEntityDeleteRequest request, CancellationToken cancellationToken)
+        public async Task<ObjectResult> Delete(CommonNamedEntityDeleteRequest request, CancellationToken cancellationToken)
         {
+            _logger.BeginScope(request);
+            _logger.LogInformation("attempting to delete {type}", nameof(Method));
+
             var response = await _dataRepository.DeleteOrReplaceMethods(request, cancellationToken);
 
             return ObjectOk(response);
